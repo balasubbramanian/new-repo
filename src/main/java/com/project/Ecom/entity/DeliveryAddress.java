@@ -15,17 +15,9 @@ public class DeliveryAddress {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long addressId;
 
-
     private String address1;
 
-
-    private String address2;
-
-
     private int pinCode;
-
-
-    private String phoneNo;
 
     @ManyToOne(optional = false, targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId", nullable = false)

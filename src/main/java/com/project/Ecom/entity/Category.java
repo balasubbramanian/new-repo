@@ -1,17 +1,14 @@
 package com.project.Ecom.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
 
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Getter
-@Setter
 public class Category {
 
     @Id
@@ -22,8 +19,7 @@ public class Category {
 
     private String description;
 
-    @OneToMany(mappedBy = "category", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Product.class)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Product.class)
     private Set<Product> products;
-
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Customer {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long customerId;
@@ -20,6 +20,8 @@ public class Customer {
     private String customerName;
 
     private String emailId;
+
+    private String phoneNo;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = DeliveryAddress.class)
     private List<DeliveryAddress> deliveryAddress;

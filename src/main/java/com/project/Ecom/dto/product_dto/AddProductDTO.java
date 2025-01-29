@@ -17,4 +17,6 @@ public class AddProductDTO {
 
     private Double price;
 
+    private String categoryName;
+
 }
