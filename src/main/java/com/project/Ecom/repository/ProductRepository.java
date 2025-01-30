@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory_categoryId(Long categoryId);
 
-    @Query("SELECT '*' FROM `product` where product_name LIKE LOWER(CONCAT('%', :productName, '%'))")
+    @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :productName, '%'))")
     List<Product> findByProductName(String productName);
 
 }

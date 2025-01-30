@@ -26,6 +26,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = DeliveryAddress.class)
     private List<DeliveryAddress> deliveryAddress;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = MyCart.class)
+    private List<MyCart> myCarts;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = OrderRecord.class)
     private List<OrderRecord> orderRecords;
 }

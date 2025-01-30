@@ -3,6 +3,7 @@ package com.project.Ecom.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,6 +21,6 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Product.class)
-    private Set<Product> products;
+    private List<Product> products;
 
 }

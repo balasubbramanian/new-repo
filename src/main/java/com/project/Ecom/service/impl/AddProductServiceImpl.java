@@ -9,6 +9,7 @@ import com.project.Ecom.service.IAddProductService;
 
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class AddProductServiceImpl implements IAddProductService {
 
         String catName = addProductDTO.getCategoryName();
 
-        Optional<Category> cat = categoryRepository.findByCategoryName(catName);
+        Optional<Category> cat = categoryRepository.findByCategoryNameContainingIgnoreCase(catName);
 
         if (cat.isPresent()) {
             Category category = cat.get();
@@ -39,7 +40,11 @@ public class AddProductServiceImpl implements IAddProductService {
             product.setPrice(addProductDTO.getPrice());
             product.setBrandName(addProductDTO.getBrandName());
             product.setCategory(category);
-            category.setProducts(Set.of(product));
+            // category.setProducts(Set.of(product));
+            if (category.getProducts() == null) {
+                category.setProducts(new ArrayList<>());
+            }
+            category.getProducts().add(product);
             categoryRepository.save(category);
         } else {
             Category category = new Category();
@@ -50,7 +55,10 @@ public class AddProductServiceImpl implements IAddProductService {
             product.setPrice(addProductDTO.getPrice());
             product.setBrandName(addProductDTO.getBrandName());
             product.setCategory(category);
-            category.setProducts(Set.of(product));
+            if (category.getProducts() == null) {
+                category.setProducts(new ArrayList<>());
+            }
+            category.getProducts().add(product);
             categoryRepository.save(category);
 
         }

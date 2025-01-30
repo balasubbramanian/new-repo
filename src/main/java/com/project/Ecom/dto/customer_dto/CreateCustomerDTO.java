@@ -16,6 +16,6 @@ public class CreateCustomerDTO {
     private String phoneNo;
     private String address1;
 
-    private int pinCode;
+    private Integer pinCode;
 
 }

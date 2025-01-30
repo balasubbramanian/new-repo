@@ -7,18 +7,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @Data
-public class AddProdToCart_Dto {
+@Builder
+public class ViewCartDto {
 
     private Long customerId;
+    private Double orderTotal;
+    private int totalItems;
 
-    // private List<CartItemsDto> cartItemsDto;
-
-    private Long productId;
-
-    private int quantity;
+    private List<CartItemsDto> cartList;
 
 }
