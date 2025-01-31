@@ -2,19 +2,14 @@ package com.project.Ecom.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
-
 import com.project.Ecom.dto.items_dto.ResponseItemsDto;
 import com.project.Ecom.entity.Category;
-import com.project.Ecom.entity.Product;
 import com.project.Ecom.mapper.ProductToResponseItemsDto;
 import com.project.Ecom.repository.CategoryRepository;
 import com.project.Ecom.repository.ProductRepository;
 import com.project.Ecom.service.ISearchItemsService;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -29,29 +24,41 @@ public class SearchItemServiceImpl implements ISearchItemsService {
     @Override
     public List<ResponseItemsDto> searchItems(String name) {
 
-        Optional<Category> category = categoryRepository.findByCategoryNameContainingIgnoreCase(name);
+        List<ResponseItemsDto> list = categoryRepository.findByCategoryNameContainingIgnoreCase(name)
+                .map(cat -> cat.getProducts()
+                        .stream()
+                        .map(ProductToResponseItemsDto::productToDto)
+                        .toList())
+                .orElseGet(() -> productRepository.findByProductName(name)
+                        .stream()
+                        .map(ProductToResponseItemsDto::productToDto)
+                        .toList());
 
-        if (category.isPresent()) {
+        return list;
 
-            Category cat = category.get();
-
-            // List<Product> products =
-            // productRepository.findByCategory_Id(cat.getCategoryId());
-
-            List<Product> products2 = cat.getProducts();
-            List<ResponseItemsDto> list = products2.stream()
-                    .map(product -> ProductToResponseItemsDto.productToDto(product)).toList();
-
-            return list;
-
-        }
-
-        List<Product> products = productRepository.findByProductName(name);
-
-        List<ResponseItemsDto> list = products.stream().map(product -> ProductToResponseItemsDto.productToDto(product))
-                .toList();
-
-        return list; // This will return null if nothing is matched.
+        /*
+         * if (category.isPresent()) {
+         * 
+         * Category cat = category.get();
+         * 
+         * // List<Product> products =
+         * // productRepository.findByCategory_Id(cat.getCategoryId())
+         * 
+         * List<ResponseItemsDto> list = cat.getProducts().stream()
+         * .map(ProductToResponseItemsDto::productToDto).toList();
+         * 
+         * return list;
+         * 
+         * }
+         * 
+         * List<Product> products = productRepository.findByProductName(name);
+         * 
+         * List<ResponseItemsDto> list = products.stream().map(product ->
+         * ProductToResponseItemsDto.productToDto(product))
+         * .toList();
+         * 
+         * return list; // This will return null if nothing is matched.
+         */
 
     }
 
